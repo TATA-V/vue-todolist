@@ -9,17 +9,19 @@ interface Todos {
   todos: Todo[];
 }
 
+const defaultValue = {
+  todos: [
+    { id: 1, text: '밥먹기' },
+    { id: 2, text: '잠자기' },
+    { id: 3, text: '산책가기' },
+  ],
+};
+
 export const useTodolistStore = defineStore('todolist', {
   // 초기 상태 지정
   state: () => {
     // return { todos: [] } as Todos;
-    return {
-      todos: [
-        { id: 1, text: '밥먹기' },
-        { id: 2, text: '잠자기' },
-        { id: 3, text: '산책가기' },
-      ],
-    } as Todos;
+    return defaultValue as Todos;
   },
   // 액션 함수 지정
   actions: {
@@ -35,8 +37,8 @@ export const useTodolistStore = defineStore('todolist', {
     },
     // 투두 수정
     editTodo(id: number, text: string) {
-      this.todos[id - 1].text = text;
-      console.log('this.todos: ', this.todos);
+      const currentIdx = this.todos.findIndex((todo) => todo.id === id);
+      this.todos[currentIdx].text = text;
     },
   },
 });
