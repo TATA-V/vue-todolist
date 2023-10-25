@@ -24,16 +24,19 @@ export const useTodolistStore = defineStore('todolist', {
   // 액션 함수 지정
   actions: {
     // 투두 생성
-    createTodo(text: Todo) {
-      this.todos.push(text);
+    createTodo(text: string) {
+      const lastTodo = this.todos[this.todos.length - 1];
+      const newId = lastTodo ? lastTodo.id + 1 : 1;
+      this.todos.push({ id: newId, text: text });
     },
     // 투두 삭제
     removeTodo(id: number) {
-      this.todos.filter((todo) => todo.id !== id);
+      this.todos = this.todos.filter((todo) => todo.id !== id);
     },
     // 투두 수정
-    editTodo(id: number, text: Todo) {
-      this.todos[id - 1] = text;
+    editTodo(id: number, text: string) {
+      this.todos[id - 1].text = text;
+      console.log('this.todos: ', this.todos);
     },
   },
 });
